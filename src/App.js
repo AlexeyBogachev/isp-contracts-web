@@ -1,23 +1,19 @@
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import LoginPage from './pages/Authorization/Login/LoginPage';
+import UserHomePage from './pages/Dashboard/User/UserHomePage';
+import EmployeeHomePage from './pages/Dashboard/Employee/EmployeeHomePage';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => (
+  <Router>
+    <Routes>
+      <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/client-page" element={<UserHomePage />} />
+      <Route path="/employee-page" element={<EmployeeHomePage />} />
+      <Route path="*" element={<Navigate to="/login" />} />
+    </Routes>
+  </Router>
+);
 
 export default App;
