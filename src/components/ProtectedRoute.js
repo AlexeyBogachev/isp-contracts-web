@@ -1,34 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React from "react";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
-  const [isAuthorized, setIsAuthorized] = useState(null);
-  const navigate = useNavigate();
+  const { user, loading } = useAuth();
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/api/auth/check-auth', { withCredentials: true });
-        const userRole = response.data.role;
-
-        if (!allowedRoles.includes(userRole)) {
-          navigate('/login');
-        } else {
-          setIsAuthorized(true);
-        }
-      } catch (err) {
-        console.error('Ошибка авторизации:', err.response?.data?.message || err.message);
-        navigate('/login');
-      }
-    };
-
-    checkAuth();
-  }, [navigate, allowedRoles]);
-
-  if (isAuthorized === null) {
-    return <p>Загрузка...</p>;
-  }
+  if (loading) return <p>Загрузка...</p>;
+  if (!user || !allowedRoles.includes(user.role)) return <Navigate to="/login" />;
 
   return <>{children}</>;
 };

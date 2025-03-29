@@ -1,38 +1,32 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import LoginForm from './LoginForm';
-import './styles.module.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
+import LoginForm from "./LoginForm";
+import "./styles.module.css";
 
 const LoginPage = () => {
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
+
     try {
-      const response = await axios.post(
-        'http://localhost:3000/api/auth/login',
-        { phone_number: phoneNumber, password },
-        { withCredentials: true }
-      );
-
-      if (response.data.token) {
-        const token = response.data.token;
-        const decodedToken = JSON.parse(atob(token.split('.')[1]));
-        const userRole = decodedToken.role;
-
-        if (userRole === 'user') {
-          navigate('/client-page');
-        } else if (userRole === 'employee') {
-          navigate('/employee-page');
-        }
+      const userData = await login(phoneNumber, password);
+      
+      if (userData.role === "user") {
+        navigate("/client-page");
+      } else if (userData.role === "employee") {
+        navigate("/menu-page");
+      } else {
+        setError("Неизвестная роль пользователя");
       }
     } catch (err) {
-      setError('Ошибка входа: ' + (err.response?.data?.message || 'Попробуйте снова'));
+      setError(err.message);
     }
   };
 
