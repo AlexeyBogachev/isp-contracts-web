@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import styles from "./styles.module.css";
-import ApplicationForm from "./edit-application/EditApplicationForm"; 
+import NewApplicationsForm from "./NewApplicationsForm";
 
 const NewApplicationsPage = () => {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedApplication, setSelectedApplication] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterTariff, setFilterTariff] = useState("");
 
   useEffect(() => {
     const fetchApplications = async () => {
@@ -34,7 +35,7 @@ const NewApplicationsPage = () => {
     }
   };
 
-  const handleDoubleClick = (app) => {
+  const openEditForm = (app) => {
     setSelectedApplication(app);
   };
 
@@ -42,60 +43,43 @@ const NewApplicationsPage = () => {
     setSelectedApplication(null);
   };
 
+  const getRowColor = (date_of_creation) => {
+    const createdDate = new Date(date_of_creation);
+    const currentDate = new Date();
+    const diffTime = Math.abs(currentDate - createdDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays <= 1) return "#d4edda";
+    if (diffDays <= 2) return "#fff3cd";
+    return "#f8d7da";
+  };
+
+  const filteredApplications = applications.filter(app => {
+    return (
+      (app.user.phone_number.includes(searchQuery) ||
+        (app.user.email && app.user.email.includes(searchQuery)) ||
+        (`${app.employee.surname} ${app.employee.name}`).toLowerCase().includes(searchQuery.toLowerCase())) &&
+      (filterTariff ? app.tariff.tariff_name === filterTariff : true)
+    );
+  });
+
   if (loading) return <p>Загрузка...</p>;
   if (error) return <p>{error}</p>;
 
   return (
-    <div className={styles["applications-page"]}>
-      <h2>Новые заявки</h2>
-
-      {selectedApplication && (
-        <div className={styles.modal}>
-          <ApplicationForm
-            application={selectedApplication}
-            onClose={closeModal}
-            onUpdate={() => window.location.reload()}
-          />
-        </div>
-      )}
-
-      <table className={styles["applications-table"]}>
-        <thead>
-          <tr>
-            <th>Менеджер</th>
-            <th>Телефон клиента</th>
-            <th>Email клиента</th>
-            <th>Тариф</th>
-            <th>Скорость (Мбит/с)</th>
-            <th>Цена (₽)</th>
-            <th>Статус</th>
-            <th>Дата создания</th>
-            <th>Действия</th>
-          </tr>
-        </thead>
-        <tbody>
-          {applications.map((app) => (
-            <tr key={app.id_application} onDoubleClick={() => handleDoubleClick(app)}>
-              <td>{app.employee.surname} {app.employee.name}</td>
-              <td>{app.user.phone_number}</td>
-              <td>{app.user.email ? app.user.email : "Отсутствует"}</td>
-              <td>{app.tariff.tariff_name}</td>
-              <td>{app.tariff.speed_mbps}</td>
-              <td>{app.tariff.price}</td>
-              <td>
-                <strong>{app.status_application.status_application_name}</strong>
-                <p>{app.status_application.description}</p>
-              </td>
-              <td>{new Date(app.date_of_creation).toLocaleString()}</td>
-              <td>
-                <button className={styles.accept}>Одобрить</button>
-                <button onClick={() => rejectApplication(app.id_application)} className={styles.reject}>Отклонить</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <NewApplicationsForm
+      applications={applications}
+      searchQuery={searchQuery}
+      setSearchQuery={setSearchQuery}
+      filterTariff={filterTariff}
+      setFilterTariff={setFilterTariff}
+      filteredApplications={filteredApplications}
+      getRowColor={getRowColor}
+      openEditForm={openEditForm}
+      rejectApplication={rejectApplication}
+      selectedApplication={selectedApplication}
+      closeModal={closeModal}
+    />
   );
 };
 
