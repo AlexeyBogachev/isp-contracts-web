@@ -29,7 +29,7 @@ const HistoryApplicationsForm = ({
       <div className={styles.filters}>
         <input
           type="text"
-          placeholder="Поиск по телефону, почте, ФИ менеджера"
+          placeholder="Поиск..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />

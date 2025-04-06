@@ -35,6 +35,40 @@ const NewApplicationsPage = () => {
     }
   };
 
+  const generateFaceAccount = () => {
+    return Math.random().toString(36).substr(2, 8).toUpperCase();
+  };
+  
+  const approveApplication = async (application) => {
+    try {
+
+      await axios.put(
+        `http://localhost:3000/api/applications/${application.id_application}`,
+        { id_status_application: 2 },
+        { withCredentials: true }
+      );
+  
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+  
+      const newContract = {
+        id_status_contract: 1,
+        report_card_number: application.employee.report_card_number,
+        id_application: application.id_application,
+        id_tariff: application.tariff.id_tariff,
+        face_account: generateFaceAccount(),
+        total_cost: application.tariff.price,
+        date_of_conclusion: tomorrow.toISOString().split('T')[0],
+      };
+  
+      await axios.post("http://localhost:3000/api/contracts", newContract, { withCredentials: true });
+  
+      setApplications(applications.filter(app => app.id_application !== application.id_application));
+    } catch (err) {
+      alert("Ошибка при одобрении: " + err.message);
+    }
+  };
+
   const openEditForm = (app) => {
     setSelectedApplication(app);
   };
@@ -77,6 +111,7 @@ const NewApplicationsPage = () => {
       getRowColor={getRowColor}
       openEditForm={openEditForm}
       rejectApplication={rejectApplication}
+      approveApplication={approveApplication}
       selectedApplication={selectedApplication}
       closeModal={closeModal}
     />

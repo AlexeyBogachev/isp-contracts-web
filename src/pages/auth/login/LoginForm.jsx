@@ -1,31 +1,60 @@
-const LoginForm = ({ phoneNumber, setPhoneNumber, password, setPassword, handleLogin, error, navigate }) => {
-    return (
-      <form onSubmit={handleLogin}>
-        <input
-          type="text"
-          placeholder="Номер телефона"
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Пароль"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Войти</button>
+import styles from './styles.module.css';
 
-        <div className="login-redirect">
-          <span>Еще нет аккаунта? — Зарегистрируйтесь! </span>
-          <button type="button" onClick={() => navigate('/registration')} className="register-button">
-            Регистрация
-          </button>
+const LoginForm = ({
+  phoneNumber,
+  setPhoneNumber,
+  password,
+  setPassword,
+  handleLogin,
+  error,
+  navigate,
+}) => {
+  return (
+    <div className={styles.container}>
+      <form onSubmit={handleLogin}>
+        <div className={styles.loginBox}>
+          <h2 className={styles['login-title']}>
+            Заключение договоров с Интернет-провайдером
+          </h2>
+
+          <input
+            type="text"
+            name="phone"
+            placeholder="Номер телефона"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            required
+            autoComplete="username"
+          />
+
+          <input
+            type="password"
+            name="password"
+            placeholder="Пароль"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            autoComplete="current-password"
+          />
+
+          <button type="submit">Войти</button>
+
+          <div className="login-redirect">
+            <span>Еще нет аккаунта? — Зарегистрируйтесь! </span>
+            <button
+              type="button"
+              onClick={() => navigate('/registration')}
+              className={styles['register-button']}
+            >
+              Регистрация
+            </button>
+          </div>
+
+          {error && <p className={styles['error-message']}>{error}</p>}
         </div>
-        {error && <p className="error-message">{error}</p>}
       </form>
-    );
-  };
-  
-  export default LoginForm;
+    </div>
+  );
+};
+
+export default LoginForm;

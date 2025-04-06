@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import RegistrationForm from './RegistrationForm';
-import './styles.module.css';
+import styles from './styles.module.css'; // Подключаем стили
 
 const RegistrationPage = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -36,9 +36,9 @@ const RegistrationPage = () => {
   };
 
   return (
-    <div className="register-page">
-      <div className="register-container">
-        <h2 className="register-title">Регистрация</h2>
+    <div className={styles.container}> {/* Используем те же классы из авторизации */}
+      <div className={styles['login-container']}> {/* Применяем контейнер из авторизации */}
+        <h2 className={styles['login-title']}>Регистрация</h2> {/* Добавляем заголовок */}
         <RegistrationForm
           phoneNumber={phoneNumber}
           setPhoneNumber={setPhoneNumber}

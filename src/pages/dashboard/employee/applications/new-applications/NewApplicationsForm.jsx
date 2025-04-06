@@ -12,6 +12,7 @@ const NewApplicationsForm = ({
   getRowColor,
   openEditForm,
   rejectApplication,
+  approveApplication,
   selectedApplication,
   closeModal
 }) => {
@@ -32,7 +33,7 @@ const NewApplicationsForm = ({
       <div className={styles.filters}>
         <input
           type="text"
-          placeholder="Поиск по телефону, почте, ФИ менеджера"
+          placeholder="Поиск..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -73,7 +74,9 @@ const NewApplicationsForm = ({
               </td>
               <td>{new Date(app.date_of_creation).toLocaleString()}</td>
               <td>
-                <button className={styles.accept}>Одобрить</button>
+              <button onClick={() => approveApplication(app)} className={styles.accept}>
+                Одобрить
+              </button>
                 <button onClick={() => rejectApplication(app.id_application)} className={styles.reject}>Отклонить</button>
                 <button onClick={() => openEditForm(app)} className={styles.edit}>Редактировать</button>
               </td>
