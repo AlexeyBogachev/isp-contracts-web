@@ -1,0 +1,80 @@
+.applications-page {
+  padding: 30px;
+  min-height: 100vh;
+}
+
+h2 {
+  font-size: 28px;
+  color: #333;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.filters input, .filters select {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  width: 30%;
+  box-sizing: border-box;
+}
+
+.filters input:focus, .filters select:focus {
+  outline: none;
+  border-color: #4CAF50;
+  background-color: #eaf7e3;
+}
+
+.return-button {
+  padding: 8px 15px;
+  font-size: 14px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.return-button:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+
+.return-button:disabled {
+  background-color: #dcdcdc;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filters input, .filters select {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .applications-table th, .applications-table td {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .return-button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
