@@ -14,29 +14,34 @@ const RegistrationPage = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     setError('');
-  
+
     if (password.length < 8) {
       setError('Пароль должен содержать не менее 8 символов.');
       return;
     }
-  
+
     const userData = {
       phone_number: phoneNumber,
       password,
     };
-  
+
     if (email.trim()) {
       userData.email = email;
     }
-  
+
     try {
       const response = await axios.post('http://localhost:3000/api/auth/register/user', userData);
-  
+
       if (response.status === 201) {
         navigate('/login');
       }
     } catch (err) {
-      setError('Ошибка регистрации: ' + (err.response?.data?.message || 'Попробуйте снова'));
+      const errorMessage = err.response?.data?.message;
+      if (errorMessage) {
+        setError(errorMessage);
+      } else {
+        setError('Произошла ошибка при регистрации. Пожалуйста, попробуйте снова.');
+      }
     }
   };
 

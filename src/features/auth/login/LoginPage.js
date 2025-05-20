@@ -18,9 +18,9 @@ const LoginPage = () => {
       const userData = await login(phoneNumber, password);
       
       if (userData.role === "user") {
-        navigate("/client-page");
+        navigate("/home");
       } else if (userData.role === "employee") {
-        navigate("/menu-page");
+        navigate("/menu");
       } else {
         setError("Неизвестная роль пользователя");
       }

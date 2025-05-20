@@ -1,11 +1,13 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
   const checkAuth = async () => {
     try {
@@ -24,19 +26,19 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (phoneNumber, password) => {
     try {
-      const response = await axios.post("http://localhost:3000/api/auth/login", 
-        { phone_number: phoneNumber, password }, 
+      const response = await axios.post("http://localhost:3000/api/auth/login",
+        { phone_number: phoneNumber, password },
         { withCredentials: true }
       );
-  
+
       if (response.data.token) {
         const decodedToken = JSON.parse(atob(response.data.token.split(".")[1]));
         const userData = { id: decodedToken.id, role: decodedToken.role };
-  
+
         localStorage.setItem("user", JSON.stringify(userData));
         setUser(userData);
-        
-        return userData; 
+
+        return userData;
       }
     } catch (error) {
       throw new Error(error.response?.data?.message || "Ошибка входа");
@@ -49,8 +51,15 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    checkAuth();
-  }, []);
+    const publicPages = ['/login', '/registration'];
+    const isPublicPage = publicPages.some(page => location.pathname === page);
+
+    if (!isPublicPage) {
+      checkAuth();
+    } else {
+      setLoading(false);
+    }
+  }, [location.pathname]);
 
   return (
     <AuthContext.Provider value={{ user, login, logout, loading }}>

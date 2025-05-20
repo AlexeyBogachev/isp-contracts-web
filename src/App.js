@@ -1,36 +1,45 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
-import Layout from "./layouts/Layout";
+import StaffLayout from "./layouts/staff/Layout";
+import ClientLayout from "./layouts/client/Layout";
 import ProtectedRoute from "./shared/components/ProtectedRoute";
 import { AuthProvider } from "./shared/context/AuthContext";
 import LoginPage from "./features/auth/login/LoginPage";
 import RegistrationPage from "./features/auth/register/RegistrationPage";
-import UserHomePage from "./features/user/home/UserHomePage";
-import EmployeeHomePage from "./features/dashboard/employee/menu/MenuPage";
-import NewApplicationsPage from "./features/dashboard/employee/applications/new/NewApplicationsPage";
-import HistoryApplicationsPage from "./features/dashboard/employee/applications/history/HistoryApplicationsPage";
-import ContractsLegalEntitiesPage from "./features/dashboard/employee/contracts/management/legal-entities/ContractsLegalEntitiesPage";
-import ContractsNaturalPersonsPage from "./features/dashboard/employee/contracts/management/natural-persons/ContractsNaturalPersonsPage";
-import UserRegistrationPage from "./features/dashboard/employee/user-register/UserRegistrationPage";
+import RequestFormationPage from "./features/client/request-formation/RequestFormationPage";
+import HomePage from "./features/client/home/HomePage";
+import EmployeeHomePage from "./features/staff/menu/MenuPage";
+import NewApplicationsPage from "./features/staff/applications/new/NewApplicationsPage";
+import HistoryApplicationsPage from "./features/staff/applications/history/HistoryApplicationsPage";
+import ContractsLegalEntitiesPage from "./features/staff/contracts/legal-entities/ContractsLegalEntitiesPage";
+import ContractsNaturalPersonsPage from "./features/staff/contracts/natural-persons/ContractsNaturalPersonsPage";
+import UserRegistrationPage from "./features/staff/user/user-register/UserRegistrationPage";
+import ViewUsersPage from "./features/staff/user/view/ViewUsersPage";
+import CreateApplicationPage from "./features/staff/user/create-application/CreateApplicationPage"
 
 const App = () => (
-  <AuthProvider>
-    <Router>
+  <Router>
+    <AuthProvider>
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
+        {/* Функционал страниц client */}
+        <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registration" element={<RegistrationPage />} />
-        <Route path="/client-page" element={<UserHomePage />} />
-        <Route path="/menu-page" element={<ProtectedRoute allowedRoles={['employee']}><Layout><EmployeeHomePage /></Layout></ProtectedRoute>} />
-        <Route path="/new-applications-page" element={<ProtectedRoute allowedRoles={['employee']}><Layout><NewApplicationsPage /></Layout></ProtectedRoute>} />
-        <Route path="/history-applications-page" element={<ProtectedRoute allowedRoles={['employee']}><Layout><HistoryApplicationsPage /></Layout></ProtectedRoute>} />
-        <Route path="/contract-management-legal-entities-page" element={<ProtectedRoute allowedRoles={['employee']}><Layout><ContractsLegalEntitiesPage /></Layout></ProtectedRoute>} />
-        <Route path="/contract-management-natural-persons-page" element={<ProtectedRoute allowedRoles={['employee']}><Layout><ContractsNaturalPersonsPage /></Layout></ProtectedRoute>} />
-        <Route path="/user-registration-page" element={<ProtectedRoute allowedRoles={['employee']}><Layout><UserRegistrationPage /></Layout></ProtectedRoute>} />
-        <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="/request-formation" element={<ClientLayout><RequestFormationPage /></ClientLayout>} />
+        <Route path="/home" element={<ClientLayout><HomePage /></ClientLayout>} />
+        {/* Функционал страниц staff */}
+        <Route path="/menu" element={<ProtectedRoute allowedRoles={['employee']}><StaffLayout><EmployeeHomePage /></StaffLayout></ProtectedRoute>} />
+        <Route path="/new-applications" element={<ProtectedRoute allowedRoles={['employee']}><StaffLayout><NewApplicationsPage /></StaffLayout></ProtectedRoute>} />
+        <Route path="/history-applications" element={<ProtectedRoute allowedRoles={['employee']}><StaffLayout><HistoryApplicationsPage /></StaffLayout></ProtectedRoute>} />
+        <Route path="/contract-management-legal-entities" element={<ProtectedRoute allowedRoles={['employee']}><StaffLayout><ContractsLegalEntitiesPage /></StaffLayout></ProtectedRoute>} />
+        <Route path="/contract-management-natural-persons" element={<ProtectedRoute allowedRoles={['employee']}><StaffLayout><ContractsNaturalPersonsPage /></StaffLayout></ProtectedRoute>} />
+        <Route path="/user-registration" element={<ProtectedRoute allowedRoles={['employee']}><StaffLayout><UserRegistrationPage /></StaffLayout></ProtectedRoute>} />
+        <Route path="/view-users" element={<ProtectedRoute allowedRoles={['employee']}><StaffLayout><ViewUsersPage /></StaffLayout></ProtectedRoute>} />
+        <Route path="/create-application" element={<ProtectedRoute allowedRoles={['employee']}><StaffLayout><CreateApplicationPage /></StaffLayout></ProtectedRoute>} />
       </Routes>
-    </Router>
-  </AuthProvider>
+    </AuthProvider>
+  </Router>
 );
 
 export default App;
