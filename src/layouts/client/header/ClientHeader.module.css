@@ -124,11 +124,12 @@
 
 .rightSection {
     display: flex;
-    align-items: center;
     gap: 1.5rem;
+    align-items: center;
 }
 
-.loginButton {
+.loginButton,
+.profileButton {
     background: rgba(255, 255, 255, 0.18);
     color: white;
     border: 1px solid rgba(255, 255, 255, 0.25);
@@ -144,14 +145,16 @@
     backdrop-filter: blur(8px);
 }
 
-.loginButton:hover {
+.loginButton:hover,
+.profileButton:hover {
     background: rgba(255, 255, 255, 0.28);
     transform: translateY(-2px);
     border-color: rgba(255, 255, 255, 0.35);
     box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
 }
 
-.loginButton::before {
+.loginButton::before,
+.profileButton::before {
     content: '';
     position: absolute;
     top: -50%;
@@ -184,7 +187,8 @@
         text-overflow: ellipsis;
     }
 
-    .loginButton {
+    .loginButton,
+    .profileButton {
         padding: 0.6rem 1.5rem;
         font-size: 0.9rem;
     }
@@ -208,7 +212,8 @@
         max-width: 150px;
     }
 
-    .loginButton {
+    .loginButton,
+    .profileButton {
         padding: 0.5rem 1.2rem;
         font-size: 0.8rem;
     }
@@ -219,12 +224,14 @@
     .header,
     .logo,
     .loginButton,
+    .profileButton,
     .title::after {
         animation: none;
         transition: none;
     }
 
     .loginButton:hover,
+    .profileButton:hover,
     .logo:hover {
         transform: none;
     }

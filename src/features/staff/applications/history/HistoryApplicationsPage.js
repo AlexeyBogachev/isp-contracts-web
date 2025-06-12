@@ -9,6 +9,10 @@ const HistoryApplicationsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterTariff, setFilterTariff] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
+  const [minCost, setMinCost] = useState("");
+  const [maxCost, setMaxCost] = useState("");
 
   useEffect(() => {
     const fetchApplications = async () => {
@@ -29,7 +33,7 @@ const HistoryApplicationsPage = () => {
   const handleReturn = async (id) => {
     const confirmReturn = window.confirm("Вы уверены, что хотите вернуть заявку?");
     if (!confirmReturn) return;
-  
+
     setApplications((prev) =>
       prev.map((app) =>
         app.id_application === id
@@ -37,7 +41,7 @@ const HistoryApplicationsPage = () => {
           : app
       )
     );
-  
+
     try {
       await axios.put(
         `http://localhost:3000/api/applications/${id}`,
@@ -53,7 +57,7 @@ const HistoryApplicationsPage = () => {
     if (app.status_application.status_application_name !== "В обработке") {
       return "#f5f5f5";
     }
-    
+
     const createdDate = new Date(app.date_of_creation);
     const currentDate = new Date();
     const diffTime = Math.abs(currentDate - createdDate);
@@ -78,6 +82,14 @@ const HistoryApplicationsPage = () => {
       setFilterStatus={setFilterStatus}
       handleReturn={handleReturn}
       getRowColor={getRowColor}
+      dateFrom={dateFrom}
+      setDateFrom={setDateFrom}
+      dateTo={dateTo}
+      setDateTo={setDateTo}
+      minCost={minCost}
+      setMinCost={setMinCost}
+      maxCost={maxCost}
+      setMaxCost={setMaxCost}
     />
   );
 };

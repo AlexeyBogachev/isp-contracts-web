@@ -1,5 +1,6 @@
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
+import { formatDate } from "../../../../../shared/utils/dateUtils";
 
 export const downloadNaturalPersonsAsExcel = async (contracts) => {
   const workbook = new ExcelJS.Workbook();
@@ -7,8 +8,8 @@ export const downloadNaturalPersonsAsExcel = async (contracts) => {
 
   const header = [
     "ID", "ФИО Сотрудника", "Телефон", "Email", "ФИО абонента", "Дата рождения", "Пол",
-    "Адрес регистрации", "Адрес проживания", "Паспорт (Серия / Номер)", "Тариф", "Скорость (Мбит/с)",
-    "Статус", "Дата создания заявки", "Лицевой счёт", "Сумма", "Дата заключения", "Дата расторжения", "Условия"
+    "Адрес проживания", "Адрес подключения", "Паспорт (Серия / Номер)", "Тариф", "Скорость (Мбит/с)",
+    "Статус", "Дата создания заявки", "Лицевой счёт", "Стоимость заявки", "Сумма", "Дата заключения", "Дата расторжения", "Условия"
   ];
 
   const headerRow = worksheet.addRow(header);
@@ -35,17 +36,18 @@ export const downloadNaturalPersonsAsExcel = async (contracts) => {
       `${contract.employee.surname} ${contract.employee.name} ${contract.employee.patronymic}`,
       contract.application.user.phone_number,
       contract.application.user.email || "Отсутствует",
-      `${contract.application.user.name} ${contract.application.user.surname} ${contract.application.user.patronymic}`,
-      contract.application.user.date_of_birth,
+      `${contract.application.user.name} ${contract.application.user.surname} ${contract.application.user.patronymic || "Отсутствует"}`,
+      formatDate(contract.application.user.date_of_birth),
       contract.application.user.gender,
-      contract.application.user.registration_address || "Отсутствует",
       contract.application.user.residential_address,
+      contract.application.connection_address,
       `${contract.application.user.passport_series} / ${contract.application.user.passport_number}`,
       contract.application.tariff.tariff_name,
       contract.application.tariff.speed_mbps,
       contract.status_contract.status_contract_name,
       new Date(contract.application.date_of_creation).toLocaleString(),
       contract.face_account,
+      contract.application.cost_application,
       contract.total_cost,
       new Date(contract.date_of_conclusion).toLocaleDateString(),
       contract.date_of_termination ? new Date(contract.date_of_termination).toLocaleDateString() : "Отсутствует",

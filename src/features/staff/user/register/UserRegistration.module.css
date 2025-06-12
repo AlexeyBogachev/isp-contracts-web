@@ -116,12 +116,19 @@
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   border: 1px solid #e0e0e0;
+  margin: 20px 0;
 }
 
 .registration-success p {
-  margin-bottom: 1rem;
-  color: #1a1a1a;
+  margin: 10px 0;
   font-size: 1rem;
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+.success-message {
+  color: #28a745 !important;
+  font-weight: 600 !important;
 }
 
 .registration-success strong {
@@ -159,4 +166,88 @@
 .registration-success button:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(26, 26, 26, 0.2);
+}
+
+.password-input-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.password-input-container input {
+  width: 100%;
+  padding: 0.75rem 2.5rem 0.75rem 1rem !important;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  color: #1a1a1a;
+  margin: 0 !important;
+}
+
+.password-input-container input:focus {
+  outline: none;
+  border-color: #1a1a1a;
+  box-shadow: 0 0 0 2px rgba(26, 26, 26, 0.1);
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1a1a1a;
+  transition: color 0.2s ease;
+  z-index: 10;
+}
+
+.password-toggle:hover {
+  color: #404040;
+}
+
+.password-toggle:focus {
+  outline: none;
+}
+
+.password-toggle svg {
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
+.password-strength {
+  margin-top: -10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.131);
+  border-radius: 8px;
+}
+
+.strength-bar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 5px;
+}
+
+.strength-segment {
+  height: 4px;
+  flex: 1;
+  border-radius: 2px;
+  transition: background-color 0.3s ease;
+}
+
+.strength-text {
+  font-size: 12px;
+  display: block;
+  text-align: center;
+  transition: color 0.3s ease;
 }

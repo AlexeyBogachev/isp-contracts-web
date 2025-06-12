@@ -17,8 +17,28 @@ const ContractsLegalEntitiesForm = ({
   setEditingContract,
   editingContract,
   renderPagination,
+  loading,
+  error,
   fetchContracts,
 }) => {
+  if (loading) {
+    return (
+      <div className={styles["contract-management-legal-entities-page"]}>
+        <h2>Договоры юридических лиц</h2>
+        <div className={styles.loading}>Загрузка данных...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={styles["contract-management-legal-entities-page"]}>
+        <h2>Договоры юридических лиц</h2>
+        <div className={styles.error}>{error}</div>
+      </div>
+    );
+  }
+
   return (
     <div className={styles["contract-management-legal-entities-page"]}>
       <h2>Договоры юридических лиц</h2>
@@ -73,7 +93,8 @@ const ContractsLegalEntitiesForm = ({
               <thead>
                 <tr>
                   <th></th>
-                  <th>ID</th>
+                  <th>ID договора</th>
+                  <th>ID заявки</th>
                   <th>ФИО Сотрудника</th>
                   <th>Телефон</th>
                   <th>Email</th>
@@ -84,11 +105,14 @@ const ContractsLegalEntitiesForm = ({
                   <th>Контактное лицо</th>
                   <th>Контактный телефон</th>
                   <th>Веб-сайт</th>
+                  <th>Юридический адрес</th>
+                  <th>Адрес подключения</th>
                   <th>Тариф</th>
                   <th>Скорость (Мбит/с)</th>
                   <th>Статус</th>
                   <th>Дата создания заявки</th>
                   <th>Лицевой счёт</th>
+                  <th>Стоимость заявки (₽)</th>
                   <th>Сумма</th>
                   <th>Дата заключения</th>
                   <th>Дата расторжения</th>
@@ -107,6 +131,7 @@ const ContractsLegalEntitiesForm = ({
                       />
                     </td>
                     <td>{contract.id_contract}</td>
+                    <td>{contract.application.id_application}</td>
                     <td>{`${contract.employee.surname} ${contract.employee.name} ${contract.employee.patronymic}`}</td>
                     <td>{contract.application.user.phone_number}</td>
                     <td>{contract.application.user.email || "Отсутствует"}</td>
@@ -117,11 +142,14 @@ const ContractsLegalEntitiesForm = ({
                     <td>{contract.application.user.contact_person || "Отсутствует"}</td>
                     <td>{contract.application.user.contact_phone}</td>
                     <td>{contract.application.user.website || "Отсутствует"}</td>
+                    <td>{contract.application.user.legal_address}</td>
+                    <td>{contract.application.connection_address}</td>
                     <td>{contract.application.tariff.tariff_name}</td>
                     <td>{contract.application.tariff.speed_mbps} Мбит/с</td>
                     <td>{contract.status_contract.status_contract_name}</td>
                     <td>{new Date(contract.application.date_of_creation).toLocaleString()}</td>
                     <td>{contract.face_account}</td>
+                    <td>{contract.application.cost_application} ₽</td>
                     <td>{contract.total_cost} ₽</td>
                     <td>{new Date(contract.date_of_conclusion).toLocaleDateString()}</td>
                     <td>{contract.date_of_termination ? new Date(contract.date_of_termination).toLocaleDateString() : "Отсутствует"}</td>

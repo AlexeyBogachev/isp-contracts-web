@@ -1,0 +1,162 @@
+.buttonContainer {
+    position: relative;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+.profileButton {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg,
+            rgba(0, 131, 143, 0.95) 0%,
+            rgba(0, 96, 100, 0.95) 100%);
+    border: none;
+    border-radius: 30px;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transform-style: preserve-3d;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.profileButton::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(225deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.1) 50%,
+            transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.profileButton:hover::before {
+    opacity: 1;
+    animation: shimmerEffect 2s infinite;
+}
+
+.glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle at center,
+            rgba(0, 188, 212, 0.3) 0%,
+            transparent 70%);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(15px);
+}
+
+@keyframes shimmerEffect {
+    0% {
+        transform: translateX(-100%) rotate(45deg);
+    }
+
+    50% {
+        transform: translateX(100%) rotate(45deg);
+    }
+
+    100% {
+        transform: translateX(-100%) rotate(45deg);
+    }
+}
+
+.iconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    position: relative;
+    z-index: 1;
+    transform-style: preserve-3d;
+    transform: translateZ(10px);
+}
+
+.icon {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.buttonText {
+    position: relative;
+    z-index: 1;
+    transform: translateZ(10px);
+    background: linear-gradient(to right,
+            rgba(255, 255, 255, 1),
+            rgba(255, 255, 255, 0.9));
+    -webkit-background-clip: text;
+    background-clip: text;
+    letter-spacing: 0.5px;
+}
+
+.profileButton:active {
+    transform: scale(0.95) translateY(2px);
+    box-shadow:
+        0 2px 10px rgba(0, 131, 143, 0.2),
+        inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+    .profileButton {
+        background: linear-gradient(135deg,
+                rgba(0, 131, 143, 0.85) 0%,
+                rgba(0, 96, 100, 0.85) 100%);
+    }
+}
+
+@media (max-width: 768px) {
+    .profileButton {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    .iconWrapper {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media (hover: none) {
+    .profileButton::before {
+        display: none;
+    }
+
+    .glow {
+        display: none;
+    }
+
+    .profileButton {
+        background: linear-gradient(135deg, #00838f 0%, #006064 100%);
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .profileButton {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .buttonText,
+    .iconWrapper {
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .profileButton {
+        box-shadow: 0 4px 20px rgba(0, 131, 143, 0.4);
+    }
+}

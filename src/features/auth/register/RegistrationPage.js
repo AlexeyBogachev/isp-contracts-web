@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import zxcvbn from 'zxcvbn';
 import RegistrationForm from './RegistrationForm';
-import styles from './Registration.module.css';
+import PageTransition from '../animation/PageTransition';
 
 const RegistrationPage = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [passwordStrength, setPasswordStrength] = useState(0);
   const navigate = useNavigate();
+
+  const handlePasswordChange = (newPassword) => {
+    setPassword(newPassword);
+    const result = zxcvbn(newPassword);
+    setPasswordStrength(result.score);
+  };
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -17,6 +25,11 @@ const RegistrationPage = () => {
 
     if (password.length < 8) {
       setError('Пароль должен содержать не менее 8 символов.');
+      return;
+    }
+
+    if (passwordStrength < 2) {
+      setError('Пароль слишком слабый. Используйте комбинацию букв, цифр и специальных символов.');
       return;
     }
 
@@ -46,21 +59,19 @@ const RegistrationPage = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles['login-container']}>
-        <h2 className={styles['login-title']}>Регистрация</h2>
-        <RegistrationForm
-          phoneNumber={phoneNumber}
-          setPhoneNumber={setPhoneNumber}
-          email={email}
-          setEmail={setEmail}
-          password={password}
-          setPassword={setPassword}
-          handleRegister={handleRegister}
-          error={error}
-        />
-      </div>
-    </div>
+    <PageTransition>
+      <RegistrationForm
+        phoneNumber={phoneNumber}
+        setPhoneNumber={setPhoneNumber}
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={handlePasswordChange}
+        handleRegister={handleRegister}
+        error={error}
+        passwordStrength={passwordStrength}
+      />
+    </PageTransition>
   );
 };
 

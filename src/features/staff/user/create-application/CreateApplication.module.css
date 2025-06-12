@@ -1,132 +1,231 @@
 .createApplicationPage {
-    min-height: 80vh;
-    background: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
+    min-height: 100vh;
+    padding: 2rem;
+    background: #f8f9fa;
 }
 
 .container {
-    width: 100%;
-    max-width: 400px;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    border: 1px solid #e0e0e0;
-    padding: 1.5rem 1.5rem 2rem 1.5rem;
+    max-width: 800px;
     margin: 0 auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.formSection {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.formSection:last-child {
+    border-bottom: none;
+    margin-bottom: 1rem;
 }
 
 .title {
-    font-size: 1.15rem;
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+    text-align: left;
     font-weight: 600;
-    margin-bottom: 1.1rem;
-    color: #1a1a1a;
-    position: relative;
-    padding-bottom: 0.5rem;
-    text-align: center;
 }
 
-.title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 2px;
-    background: #1a1a1a;
+.subtitle {
+    font-size: 1.2rem;
+    color: #333;
+    margin: 1.5rem 0 1rem;
+    font-weight: 500;
+}
+
+.buttonGroup {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.typeButton {
+    flex: 1;
+    padding: 1rem;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    background: white;
+    color: #495057;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.typeButton:hover {
+    border-color: #4a90e2;
+    background: #f8f9fa;
+}
+
+.typeButton.active {
+    border-color: #4a90e2;
+    background: #e7f1ff;
+    color: #1a73e8;
 }
 
 .input,
 .select {
     width: 100%;
-    padding: 0.6rem 0.9rem;
-    border: 1px solid #e0e0e0;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
     border-radius: 8px;
-    font-size: 0.97rem;
+    font-size: 1rem;
     transition: all 0.2s ease;
-    color: #1a1a1a;
-    margin-bottom: 0.7rem;
-    background: #fff;
-    box-sizing: border-box;
 }
 
 .input:focus,
 .select:focus {
     outline: none;
-    border-color: #1a1a1a;
-    box-shadow: 0 0 0 2px rgba(26, 26, 26, 0.08);
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
 }
 
 .select {
-    appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 0.75rem center;
-    background-size: 1em;
-    padding-right: 2.5rem;
+    background-color: white;
+    cursor: pointer;
 }
 
-.button {
+.submitButton {
     width: 100%;
-    margin: 1.1rem 0 0 0;
-    padding: 0.7rem 0;
+    padding: 1rem;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 8px;
     font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
-    border: 1px solid #1a1a1a;
-    border-radius: 8px;
-    background: #fff;
-    color: #1a1a1a;
     transition: all 0.2s ease;
-    display: block;
+    margin-top: 1rem;
 }
 
-.button:hover {
-    background: #f5f5f5;
+.submitButton:hover {
+    background-color: #357abd;
     transform: translateY(-1px);
 }
 
-.button:active {
+.submitButton:active {
     transform: translateY(0);
 }
 
-.button:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(26, 26, 26, 0.13);
-}
-
 .message {
-    color: #dc3545;
-    font-size: 0.97rem;
     margin-top: 1rem;
-    text-align: center;
-    padding: 0.7rem;
-    background: rgba(220, 53, 69, 0.08);
+    padding: 1rem;
     border-radius: 8px;
-}
-
-/* Step-specific styles */
-.step-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.step-title {
-    font-size: 1.25rem;
+    text-align: center;
     font-weight: 500;
-    color: #1a1a1a;
+}
+
+.error {
+    background-color: #fee;
+    color: #c00;
+    border: 1px solid #fcc;
+}
+
+.success {
+    background-color: #e6ffe6;
+    color: #0c0;
+    border: 1px solid #cfc;
+}
+
+.inputContainer {
     margin-bottom: 1rem;
 }
 
-.button-group {
+.errorText {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+.inputError {
+    border-color: #dc3545;
+}
+
+.inputError:focus {
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.checkboxContainer {
+    margin: 1rem 0;
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 1.5rem;
-    width: 100%;
     align-items: center;
+}
+
+.checkboxLabel {
+    margin-left: 0.5rem;
+    user-select: none;
+    color: #495057;
+}
+
+.checkbox {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 4px;
+    border: 2px solid #ddd;
+    cursor: pointer;
+}
+
+.directorFieldset {
+    border: 1px solid #e9ecef;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+    background: #f8f9fa;
+}
+
+.directorFields {
+    display: grid;
+    gap: 1rem;
+}
+
+.addressDetails {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 1rem 0 1.5rem;
+}
+
+.addressField {
+    flex: 1;
+}
+
+.addressField input {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .createApplicationPage {
+        padding: 1rem;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+
+    .buttonGroup {
+        flex-direction: column;
+    }
+
+    .addressDetails {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .title {
+        font-size: 1.25rem;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+    }
 }

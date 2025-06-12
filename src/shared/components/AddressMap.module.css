@@ -1,0 +1,34 @@
+.mapContainer {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.selectedAddress {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: #1a237e;
+}
+
+.selectedAddress p {
+    margin: 0;
+    font-weight: 500;
+}
+
+.error {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ff000080;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    z-index: 1000;
+}

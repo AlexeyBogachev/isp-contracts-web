@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../shared/context/AuthContext";
 import LoginForm from "./LoginForm";
+import PageTransition from "../animation/PageTransition";
 
 const LoginPage = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -16,7 +17,7 @@ const LoginPage = () => {
 
     try {
       const userData = await login(phoneNumber, password);
-      
+
       if (userData.role === "user") {
         navigate("/home");
       } else if (userData.role === "employee") {
@@ -30,19 +31,16 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="login-page">
-      <div className="login-container">
-        <LoginForm
-          phoneNumber={phoneNumber}
-          setPhoneNumber={setPhoneNumber}
-          password={password}
-          setPassword={setPassword}
-          handleLogin={handleLogin}
-          error={error}
-          navigate={navigate}
-        />
-      </div>
-    </div>
+    <PageTransition>
+      <LoginForm
+        phoneNumber={phoneNumber}
+        setPhoneNumber={setPhoneNumber}
+        password={password}
+        setPassword={setPassword}
+        handleLogin={handleLogin}
+        error={error}
+      />
+    </PageTransition>
   );
 };
 

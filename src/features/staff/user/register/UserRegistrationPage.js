@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import zxcvbn from 'zxcvbn';
 import RegistrationForm from './UserRegistrationForm';
 import styles from './UserRegistration.module.css';
 
@@ -11,7 +12,14 @@ const UserRegistrationPage = () => {
   const [error, setError] = useState('');
   const [userId, setUserId] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState(0);
   const navigate = useNavigate();
+
+  const handlePasswordChange = (newPassword) => {
+    setPassword(newPassword);
+    const result = zxcvbn(newPassword);
+    setPasswordStrength(result.score);
+  };
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -20,6 +28,11 @@ const UserRegistrationPage = () => {
 
     if (password.length < 8) {
       setError('Пароль должен содержать не менее 8 символов.');
+      return;
+    }
+
+    if (passwordStrength < 2) {
+      setError('Пароль слишком слабый. Используйте комбинацию букв, цифр и специальных символов.');
       return;
     }
 
@@ -66,13 +79,14 @@ const UserRegistrationPage = () => {
             email={email}
             setEmail={setEmail}
             password={password}
-            setPassword={setPassword}
+            setPassword={handlePasswordChange}
             handleRegister={handleRegister}
             error={error}
+            passwordStrength={passwordStrength}
           />
         ) : (
           <div className={styles['registration-success']}>
-            <p>Регистрация прошла успешно!</p>
+            <p className={styles['success-message']}>Регистрация прошла успешно!</p>
             <p>Ваш ID: <strong>{userId}</strong></p>
             <button onClick={handleCopy}>
               {copied ? 'Скопировано!' : 'Скопировать ID'}
@@ -84,11 +98,12 @@ const UserRegistrationPage = () => {
                 setEmail('');
                 setPassword('');
                 setError('');
-                }}>
+                setPasswordStrength(0);
+              }}>
                 Зарегистрировать ещё
               </button>
 
-              <button onClick={() => navigate('/create-application')}>
+              <button onClick={() => navigate('/create-application', { state: { userId } })}>
                 Продолжить оформление клиента
               </button>
             </div>

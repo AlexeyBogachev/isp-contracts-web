@@ -1,11 +1,28 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../../shared/context/AuthContext";
 import styles from "./StaffHeader.module.css";
+import SidebarMenu from "../sidebar-menu/SidebarMenu";
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { logout } = useAuth();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    setIsSidebarOpen(false);
+  }, [location]);
 
   const handleLogout = async () => {
     const confirmLogout = window.confirm("Вы уверены, что хотите выйти?");
@@ -25,30 +42,27 @@ const Header = () => {
   };
 
   return (
-    <header className={styles.header}>
-      <div className={styles.leftSection}>
-        <img
-          src="https://cdn-icons-png.flaticon.com/512/9794/9794255.png"
-          alt="ISP Logo"
-          className={styles.logoImage}
-          onClick={handleNavigateToMenu}
-        />
-        <h1 className={styles.title} onClick={handleNavigateToMenu}>
-          Заключение договоров с Интернет-провайдером
-        </h1>
-      </div>
-      <nav className={styles.nav}>
-        <Link to="/menu">Главная</Link>
-        <Link to="/new-applications">Заявки</Link>
-        <Link to="/history-applications">История заявок</Link>
-        <Link to="/user-registration">Рег. пользователя</Link>
-        <Link to="/create-application">Оформ. пользователя</Link>
-        <Link to="/contract-management-legal-entities">Дог. Юр. лиц</Link>
-        <Link to="/contract-management-natural-persons">Дог. Физ. лиц</Link>
-        <Link to="/view-users">Пользователи</Link>
-        <button className={styles.logoutButton} onClick={handleLogout}>Выйти</button>
-      </nav>
-    </header>
+    <>
+      <header className={`${styles.header} ${isScrolled ? styles.scrolled : ""}`}>
+        <div className={styles.leftSection}>
+          <div className={styles.logoWrapper} onClick={handleNavigateToMenu}>
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/9794/9794255.png"
+              alt="ISP Logo"
+              className={styles.logoImage}
+            />
+          </div>
+          <h1 className={styles.title} onClick={handleNavigateToMenu}>
+            Интернет-провайдер Оптик-Телеком
+          </h1>
+        </div>
+      </header>
+      <SidebarMenu
+        isOpen={isSidebarOpen}
+        setIsOpen={setIsSidebarOpen}
+        handleLogout={handleLogout}
+      />
+    </>
   );
 };
 

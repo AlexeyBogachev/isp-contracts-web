@@ -1,0 +1,421 @@
+.settingsContainer {
+    padding: 140px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    min-height: calc(100vh - 80px);
+    background: white;
+}
+
+.settingsCard {
+    background: white;
+    border-radius: 24px;
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.05),
+        0 8px 32px rgba(26, 35, 126, 0.1);
+    padding: 40px;
+    animation: slideUp 0.6s ease-out;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.settingsCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #1a237e, #3949ab, #1a237e);
+    animation: shimmer 3s infinite linear;
+}
+
+.settingsCard:last-child {
+    margin-bottom: 0;
+}
+
+.settingsHeader {
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid rgba(26, 35, 126, 0.1);
+    position: relative;
+}
+
+.settingsHeader h1 {
+    color: #1a237e;
+    margin: 0;
+    font-size: 32px;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 8px;
+}
+
+.settingsHeader h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: #1a237e;
+    border-radius: 2px;
+}
+
+.clientTypeSelection {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.clientTypeSelection h2 {
+    color: #1a237e;
+    margin-bottom: 25px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.clientTypeButtons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.typeButton {
+    padding: 15px 30px;
+    border: 2px solid #1a237e;
+    border-radius: 12px;
+    background: white;
+    color: #1a237e;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 200px;
+    position: relative;
+    overflow: hidden;
+}
+
+.typeButton:hover {
+    background: #f5f5f5;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(26, 35, 126, 0.2);
+}
+
+.typeButton.active {
+    background: linear-gradient(135deg, #1a237e, #3949ab);
+    color: white;
+    border: none;
+    padding: 17px 32px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 100%;
+    max-width: 100%;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.formGroup:hover {
+    transform: translateY(-2px);
+}
+
+.label {
+    color: #666;
+    font-weight: 500;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.input {
+    padding: 14px;
+    border: 2px solid rgba(26, 35, 126, 0.1);
+    border-radius: 12px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+.input:focus {
+    border-color: #1a237e;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+    transform: translateY(-1px);
+}
+
+.input:disabled {
+    background: #f8f9ff;
+    cursor: not-allowed;
+    border-color: rgba(26, 35, 126, 0.05);
+}
+
+.input.inputError {
+    border-color: #d32f2f;
+    background-color: #fff8f8;
+}
+
+.input.inputError:focus {
+    border-color: #d32f2f;
+    box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
+}
+
+.error {
+    color: #d32f2f;
+    font-size: 14px;
+    margin-top: 4px;
+    animation: fadeIn 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.error::before {
+    content: '⚠️';
+    font-size: 14px;
+}
+
+.errorMessage {
+    color: #d32f2f;
+    background-color: #fff8f8;
+    border: 1px solid #ffcdd2;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 25px;
+    font-size: 14px;
+    animation: fadeIn 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 2px 8px rgba(211, 47, 47, 0.1);
+}
+
+.errorMessage::before {
+    content: "⚠️";
+    font-size: 16px;
+}
+
+.formGroup.short {
+    max-width: 200px;
+}
+
+.formGroup.medium {
+    max-width: 300px;
+}
+
+.formGroup input[type="date"],
+.formGroup input[name="passport_series"],
+.formGroup input[name="passport_number"],
+.formGroup input[name="tin"],
+.formGroup input[name="registration_number"],
+.formGroup input[name="contact_phone"] {
+    max-width: 200px;
+}
+
+select.input {
+    width: 200px;
+    max-width: 100%;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231a237e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 40px;
+}
+
+.buttonsContainer {
+    display: flex;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.saveButton {
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #1a237e, #3949ab);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.saveButton::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.2),
+            transparent);
+    transition: 0.5s;
+}
+
+.saveButton:hover::before {
+    left: 100%;
+}
+
+.saveButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(26, 35, 126, 0.3);
+}
+
+.cancelButton {
+    padding: 14px 28px;
+    background: white;
+    color: #1a237e;
+    border: 2px solid #1a237e;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.cancelButton:hover {
+    background: #f5f5f5;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(26, 35, 126, 0.1);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -1000px;
+    }
+
+    100% {
+        background-position: 1000px;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .settingsContainer {
+        padding: 20px 10px;
+    }
+
+    .settingsCard {
+        padding: 20px;
+        border-radius: 16px;
+    }
+
+    .settingsHeader {
+        text-align: center;
+    }
+
+    .settingsHeader h1::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .clientTypeButtons {
+        flex-direction: column;
+    }
+
+    .typeButton {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .form {
+        gap: 20px;
+    }
+
+    .formGroup,
+    .formGroup.short,
+    .formGroup.medium,
+    .formGroup input[type="date"],
+    .formGroup input[name="passport_series"],
+    .formGroup input[name="passport_number"],
+    .formGroup input[name="tin"],
+    .formGroup input[name="registration_number"],
+    .formGroup input[name="contact_phone"],
+    select.input {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .buttonsContainer {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .saveButton,
+    .cancelButton {
+        width: 100%;
+    }
+}
+
+.noDataMessage {
+    text-align: center;
+    padding: 30px;
+}
+
+.noDataMessage h2 {
+    color: #1a237e;
+    margin-bottom: 15px;
+}
+
+.noDataMessage p {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.actionButton {
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.primaryButton {
+    background: #1a237e !important;
+    color: white !important;
+    border: none !important;
+}
+
+.primaryButton:hover {
+    background: #283593 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(26, 35, 126, 0.3);
+}

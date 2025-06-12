@@ -1,10 +1,35 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import styles from './Home.module.css';
 
-const HomeForm = ({ onConnectClick }) => {
+const HomeForm = () => {
+    const navigate = useNavigate();
+
+    const handleConnectClick = (tariffId) => {
+        navigate('/request-formation', { state: { selectedTariffId: tariffId } });
+    };
+
+    const buttonVariants = {
+        initial: { scale: 1 },
+        hover: {
+            scale: 1.05,
+            transition: {
+                duration: 0.2,
+                ease: "easeInOut"
+            }
+        },
+        tap: {
+            scale: 0.95,
+            transition: {
+                duration: 0.1,
+                ease: "easeInOut"
+            }
+        }
+    };
+
     return (
         <div className={styles.homeWrapper}>
-            {/* Hero Section */}
             <section className={styles.heroSection}>
                 <div className={styles.heroRay}></div>
                 <div className={styles.heroRay2}></div>
@@ -16,12 +41,20 @@ const HomeForm = ({ onConnectClick }) => {
                         <p className={styles.heroSubtitle}>
                             Надежное подключение со скоростью до 1 Гбит/с
                         </p>
-                        <button className={styles.ctaButton} onClick={onConnectClick}>Подключить интернет</button>
+                        <motion.button
+                            className={styles.ctaButton}
+                            onClick={() => handleConnectClick()}
+                            variants={buttonVariants}
+                            initial="initial"
+                            whileHover="hover"
+                            whileTap="tap"
+                        >
+                            Подключить интернет
+                        </motion.button>
                     </div>
                 </div>
             </section>
 
-            {/* Features Section */}
             <section className={styles.featuresSection}>
                 <div className={styles.innerContainer}>
                     <h2>Почему выбирают нас</h2>
@@ -45,36 +78,53 @@ const HomeForm = ({ onConnectClick }) => {
                 </div>
             </section>
 
-            {/* Tariffs Section */}
             <section className={styles.tariffsSection}>
                 <div className={styles.innerContainer}>
                     <h2>Выберите свой тариф</h2>
                     <div className={styles.tariffsGrid}>
                         <div className={styles.tariffCard}>
                             <h3>Базовый</h3>
-                            <div className={styles.price}>от 299 ₽/мес</div>
+                            <div className={styles.price}>399 ₽/мес</div>
                             <ul className={styles.tariffFeatures}>
                                 <li>Скорость до 100 Мбит/с</li>
                                 <li>Безлимитный трафик</li>
                                 <li>Базовая защита</li>
                             </ul>
-                            <button className={styles.tariffButton} onClick={onConnectClick}>Подключить</button>
+                            <motion.button
+                                className={styles.tariffButton}
+                                onClick={() => handleConnectClick(1)}
+                                variants={buttonVariants}
+                                initial="initial"
+                                whileHover="hover"
+                                whileTap="tap"
+                            >
+                                Подключить
+                            </motion.button>
                         </div>
                         <div className={`${styles.tariffCard} ${styles.popular}`}>
                             <div className={styles.popularBadge}>Популярный</div>
                             <h3>Оптимальный</h3>
-                            <div className={styles.price}>от 499 ₽/мес</div>
+                            <div className={styles.price}>799 ₽/мес</div>
                             <ul className={styles.tariffFeatures}>
                                 <li>Скорость до 300 Мбит/с</li>
                                 <li>Безлимитный трафик</li>
                                 <li>Расширенная защита</li>
                                 <li>Статический IP</li>
                             </ul>
-                            <button className={styles.tariffButton} onClick={onConnectClick}>Подключить</button>
+                            <motion.button
+                                className={styles.tariffButton}
+                                onClick={() => handleConnectClick(2)}
+                                variants={buttonVariants}
+                                initial="initial"
+                                whileHover="hover"
+                                whileTap="tap"
+                            >
+                                Подключить
+                            </motion.button>
                         </div>
                         <div className={styles.tariffCard}>
                             <h3>Максимальный</h3>
-                            <div className={styles.price}>от 799 ₽/мес</div>
+                            <div className={styles.price}>1799 ₽/мес</div>
                             <ul className={styles.tariffFeatures}>
                                 <li>Скорость до 1 Гбит/с</li>
                                 <li>Безлимитный трафик</li>
@@ -82,13 +132,21 @@ const HomeForm = ({ onConnectClick }) => {
                                 <li>Статический IP</li>
                                 <li>Приоритетная поддержка</li>
                             </ul>
-                            <button className={styles.tariffButton} onClick={onConnectClick}>Подключить</button>
+                            <motion.button
+                                className={styles.tariffButton}
+                                onClick={() => handleConnectClick(3)}
+                                variants={buttonVariants}
+                                initial="initial"
+                                whileHover="hover"
+                                whileTap="tap"
+                            >
+                                Подключить
+                            </motion.button>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Benefits Section */}
             <section className={styles.benefitsSection}>
                 <div className={styles.innerContainer}>
                     <h2>Преимущества нашего интернета</h2>
@@ -109,12 +167,20 @@ const HomeForm = ({ onConnectClick }) => {
                 </div>
             </section>
 
-            {/* CTA Section */}
             <section className={styles.ctaSection}>
                 <div className={styles.innerContainer}>
                     <h2>Готовы подключить быстрый интернет?</h2>
                     <p>Оставьте заявку, и мы свяжемся с вами в ближайшее время</p>
-                    <button className={styles.ctaButton} onClick={onConnectClick}>Оставить заявку</button>
+                    <motion.button
+                        className={styles.ctaButton}
+                        onClick={() => handleConnectClick()}
+                        variants={buttonVariants}
+                        initial="initial"
+                        whileHover="hover"
+                        whileTap="tap"
+                    >
+                        Оставить заявку
+                    </motion.button>
                 </div>
             </section>
         </div>

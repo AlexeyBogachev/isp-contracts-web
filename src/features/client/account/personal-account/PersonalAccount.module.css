@@ -1,0 +1,431 @@
+.profileContainer {
+    padding: 140px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: calc(100vh - 80px);
+    background: white;
+}
+
+.profileCard {
+    background: white;
+    border-radius: 24px;
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.05),
+        0 8px 32px rgba(26, 35, 126, 0.1);
+    padding: 40px;
+    animation: slideUp 0.6s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.profileCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #1a237e, #3949ab, #1a237e);
+    animation: shimmer 3s infinite linear;
+}
+
+.profileHeader {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid rgba(26, 35, 126, 0.1);
+    position: relative;
+}
+
+.avatarContainer {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1a237e, #3949ab);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+        0 4px 15px rgba(26, 35, 126, 0.3),
+        0 8px 25px rgba(26, 35, 126, 0.2);
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.avatarContainer:hover {
+    transform: scale(1.05) translateY(-2px);
+    box-shadow:
+        0 6px 20px rgba(26, 35, 126, 0.4),
+        0 10px 30px rgba(26, 35, 126, 0.3);
+}
+
+.avatarContainer::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1a237e, #3949ab, #1a237e);
+    z-index: -1;
+    animation: rotate 3s linear infinite;
+}
+
+.avatar {
+    color: white;
+    font-size: 36px;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.profileHeader h1 {
+    color: #1a237e;
+    margin: 0;
+    font-size: 32px;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 8px;
+}
+
+.profileHeader h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: #1a237e;
+    border-radius: 2px;
+}
+
+.profileInfo {
+    display: grid;
+    gap: 40px;
+}
+
+.infoSection {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(26, 35, 126, 0.08);
+}
+
+.infoSection:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(26, 35, 126, 0.12);
+}
+
+.infoSection h2 {
+    color: #1a237e;
+    margin: 0 0 25px 0;
+    font-size: 24px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.infoGrid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.infoItem {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 15px;
+    background: rgba(26, 35, 126, 0.02);
+    border-radius: 12px;
+    transition: background-color 0.3s ease;
+}
+
+.infoItem:hover {
+    background: rgba(26, 35, 126, 0.04);
+}
+
+.label {
+    color: #666;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.value {
+    color: #1a237e;
+    font-size: 16px;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+.actionsSection {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(26, 35, 126, 0.1);
+}
+
+.actionsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.actionButton {
+    padding: 15px 25px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    background: white;
+    border: 2px solid #1a237e;
+    color: #1a237e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.actionButton:hover {
+    background: #1a237e;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(26, 35, 126, 0.3);
+}
+
+.actionButton.active {
+    background: #1a237e;
+    color: white;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -1000px;
+    }
+
+    100% {
+        background-position: 1000px;
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .profileContainer {
+        padding: 20px 10px;
+    }
+
+    .profileCard {
+        padding: 20px;
+        border-radius: 16px;
+    }
+
+    .profileHeader {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .profileHeader h1::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .infoGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .contractHeader {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .downloadButton {
+        width: 100%;
+    }
+
+    .actionsGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.noDataMessage {
+    text-align: center;
+    padding: 30px;
+}
+
+.noDataMessage h2 {
+    color: #1a237e;
+    margin-bottom: 15px;
+}
+
+.noDataMessage p {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.primaryButton {
+    background: #1a237e !important;
+    color: white !important;
+    border: none !important;
+}
+
+.primaryButton:hover {
+    background: #283593 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(26, 35, 126, 0.3);
+}
+
+.statusValue {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    background: rgba(26, 35, 126, 0.1);
+    color: #1a237e;
+    transition: all 0.3s ease;
+}
+
+.statusValue:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(26, 35, 126, 0.2);
+}
+
+.statusProcessing {
+    background-color: #e3f2fd;
+    color: #1a237e;
+}
+
+.statusRejected {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.statusApproved {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.activeButton {
+    background: #1a237e !important;
+    color: white !important;
+    border: none !important;
+}
+
+.activeButton:hover {
+    background: #283593 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(26, 35, 126, 0.3);
+}
+
+.contractActions {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 20px;
+}
+
+.contractHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(26, 35, 126, 0.1);
+}
+
+.contractHeader h2 {
+    margin: 0;
+    color: #1a237e;
+    font-size: 24px;
+    position: relative;
+}
+
+.downloadButton {
+    background: white !important;
+    color: #1a237e !important;
+    border: 2px solid #1a237e !important;
+    padding: 12px 28px !important;
+    font-size: 16px !important;
+    border-radius: 12px !important;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 180px;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease !important;
+    font-weight: 500;
+}
+
+.downloadButton:hover {
+    background: linear-gradient(135deg, #1a237e, #3949ab) !important;
+    color: white !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(26, 35, 126, 0.3);
+}
+
+.downloadButton::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.2),
+            transparent);
+    transition: 0.5s;
+}
+
+.downloadButton:hover::before {
+    left: 100%;
+}
+
+@media (max-width: 768px) {
+    .contractActions {
+        padding-right: 0;
+    }
+
+    .contractHeader {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+
+    .downloadButton {
+        width: 100%;
+    }
+}

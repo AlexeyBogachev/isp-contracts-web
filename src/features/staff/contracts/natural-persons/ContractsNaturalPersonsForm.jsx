@@ -1,5 +1,6 @@
 import EditContractNaturalPerson from "./edit/EditContractNaturalPersonForm";
 import styles from "./ContractsNaturalPersons.module.css";
+import { formatDate } from "../../../../shared/utils/dateUtils";
 
 const ContractsNaturalPersonsForm = ({
   contracts,
@@ -20,10 +21,55 @@ const ContractsNaturalPersonsForm = ({
   setEditingContract,
   renderPagination,
   handleSave,
+  loading,
+  error,
+  handleDeleteClick,
+  deleteModalOpen,
+  contractToDelete,
+  handleDeleteConfirm,
+  handleDeleteCancel,
 }) => {
+  if (loading) {
+    return (
+      <div className={styles["contract-management-natural-persons-page"]}>
+        <h2>Договоры физических лиц</h2>
+        <div className={styles.loading}>Загрузка данных...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={styles["contract-management-natural-persons-page"]}>
+        <h2>Договоры физических лиц</h2>
+        <div className={styles.error}>{error}</div>
+      </div>
+    );
+  }
+
   return (
     <div className={styles["contract-management-natural-persons-page"]}>
       <h2>Договоры физических лиц</h2>
+
+      {deleteModalOpen && contractToDelete && (
+        <div className={styles["modal-overlay"]}>
+          <div className={styles["modal-content"]}>
+            <h3 className={styles["modal-title"]}>Подтверждение удаления</h3>
+            <p className={styles["modal-text"]}>
+              Вы действительно хотите удалить договор #{contractToDelete.id_contract}?
+              Это действие нельзя будет отменить.
+            </p>
+            <div className={styles["modal-buttons"]}>
+              <button className={styles["modal-cancel"]} onClick={handleDeleteCancel}>
+                Отмена
+              </button>
+              <button className={styles["modal-confirm"]} onClick={handleDeleteConfirm}>
+                Удалить
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className={styles.filters}>
         <input
@@ -52,7 +98,7 @@ const ContractsNaturalPersonsForm = ({
         </select>
       </div>
 
-      <div className={styles["actions"]}>
+      <div className={styles.actions}>
         <button onClick={handleDownload} disabled={selectedContracts.length === 0} className={styles["download-button"]}>
           Скачать .xlsx
         </button>
@@ -68,21 +114,23 @@ const ContractsNaturalPersonsForm = ({
               <thead>
                 <tr>
                   <th></th>
-                  <th>ID</th>
+                  <th>ID договора</th>
+                  <th>ID заявки</th>
                   <th>ФИО Сотрудника</th>
                   <th>Телефон</th>
                   <th>Email</th>
                   <th>ФИО абонента</th>
                   <th>Дата рождения</th>
                   <th>Пол</th>
-                  <th>Адрес регистрации</th>
                   <th>Адрес проживания</th>
+                  <th>Адрес подключения</th>
                   <th>Паспорт (Серия / Номер)</th>
                   <th>Тариф</th>
                   <th>Скорость (Мбит/с)</th>
                   <th>Статус</th>
                   <th>Дата создания заявки</th>
                   <th>Лицевой счёт</th>
+                  <th>Стоимость заявки (₽)</th>
                   <th>Сумма</th>
                   <th>Дата заключения</th>
                   <th>Дата расторжения</th>
@@ -101,28 +149,35 @@ const ContractsNaturalPersonsForm = ({
                       />
                     </td>
                     <td>{contract.id_contract}</td>
+                    <td>{contract.application.id_application}</td>
                     <td>{`${contract.employee.surname} ${contract.employee.name} ${contract.employee.patronymic}`}</td>
                     <td>{contract.application.user.phone_number}</td>
                     <td>{contract.application.user.email || "Отсутствует"}</td>
                     <td>{`${contract.application.user.name} ${contract.application.user.surname} ${contract.application.user.patronymic}`}</td>
-                    <td>{contract.application.user.date_of_birth}</td>
+                    <td>{formatDate(contract.application.user.date_of_birth)}</td>
                     <td>{contract.application.user.gender}</td>
-                    <td>{contract.application.user.registration_address || "Отсутствует"}</td>
                     <td>{contract.application.user.residential_address}</td>
+                    <td>{contract.application.connection_address}</td>
                     <td>{contract.application.user.passport_series} / {contract.application.user.passport_number}</td>
                     <td>{contract.application.tariff.tariff_name}</td>
                     <td>{contract.application.tariff.speed_mbps} Мбит/с</td>
                     <td>{contract.status_contract.status_contract_name}</td>
                     <td>{new Date(contract.application.date_of_creation).toLocaleString()}</td>
                     <td>{contract.face_account}</td>
+                    <td>{contract.application.cost_application} ₽</td>
                     <td>{contract.total_cost} ₽</td>
                     <td>{new Date(contract.date_of_conclusion).toLocaleDateString()}</td>
                     <td>{contract.date_of_termination ? new Date(contract.date_of_termination).toLocaleDateString() : "Отсутствует"}</td>
                     <td>{contract.contract_terms || "Отсутствует"}</td>
                     <td>
-                      <button onClick={() => setEditingContract(contract)} title="Редактировать">
-                        Редактировать
-                      </button>
+                      <div className={styles["action-buttons"]}>
+                        <button onClick={() => setEditingContract(contract)} title="Редактировать" className={styles["edit-button"]}>
+                          Редактировать
+                        </button>
+                        <button onClick={() => handleDeleteClick(contract)} className={styles["delete-button"]}>
+                          Удалить
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}

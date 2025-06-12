@@ -1,8 +1,6 @@
-// src/pages/ViewUsersPage.js
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import styles from './ViewUsers.module.css';
+import ViewUsersForm from './ViewUsersForm.jsx';
 
 const ViewUsersPage = () => {
   const [users, setUsers] = useState([]);
@@ -12,10 +10,35 @@ const ViewUsersPage = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/users', {
-          withCredentials: true
+        const [usersResponse, naturalPersonsResponse, legalEntitiesResponse] = await Promise.all([
+          axios.get('http://localhost:3000/api/users', { withCredentials: true }),
+          axios.get('http://localhost:3000/api/natural-persons', { withCredentials: true }),
+          axios.get('http://localhost:3000/api/legal-entities', { withCredentials: true })
+        ]);
+
+        const enrichedUsers = usersResponse.data.map(user => {
+          const naturalPerson = naturalPersonsResponse.data.find(np => np.id_user === user.id_user);
+          const legalEntity = legalEntitiesResponse.data.find(le => le.id_user === user.id_user);
+
+          let userType = 'undefined';
+          let userDetails = null;
+
+          if (naturalPerson) {
+            userType = 'physical';
+            userDetails = naturalPerson;
+          } else if (legalEntity) {
+            userType = 'legal';
+            userDetails = legalEntity;
+          }
+
+          return {
+            ...user,
+            userType,
+            userDetails
+          };
         });
-        setUsers(response.data);
+
+        setUsers(enrichedUsers);
       } catch (err) {
         setError('Ошибка при загрузке пользователей: ' + err.message);
       } finally {
@@ -26,40 +49,12 @@ const ViewUsersPage = () => {
     fetchUsers();
   }, []);
 
-  if (loading) {
-    return <div className={styles['view-users-page']}>Загрузка...</div>;
-  }
-
-  if (error) {
-    return <div className={styles['view-users-page']}>{error}</div>;
-  }
-
   return (
-    <div className={styles['view-users-page']}>
-      <h1 className={styles['view-users-title']}>Список клиентов</h1>
-      <div className={styles['table-wrapper']}>
-        <table className={styles['users-table']}>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Телефон</th>
-              <th>Email</th>
-              <th>Пароль</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map(user => (
-              <tr key={user.id_user}>
-                <td>{user.id_user}</td>
-                <td>{user.phone_number}</td>
-                <td>{user.email}</td>
-                <td>{user.password}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <ViewUsersForm
+      users={users}
+      loading={loading}
+      error={error}
+    />
   );
 };
 

@@ -15,7 +15,11 @@ const MenuPage = () => {
           }
         });
 
-        setContracts(response.data.slice(-15));
+        const sortedContracts = response.data
+          .sort((a, b) => new Date(b.application?.date_of_creation) - new Date(a.application?.date_of_creation))
+          .slice(-15);
+
+        setContracts(sortedContracts);
       } catch (error) {
         console.error("Ошибка при загрузке договоров:", error);
       }
